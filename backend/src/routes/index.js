@@ -1,9 +1,15 @@
 import { Router } from "express";
 
-import { rootController } from "../controllers/index";
+import { 
+    pageNotFoundController,
+    internalServerErrorController
+}
+from "../controllers/index";
 
 
 
 export const rootRouter = Router();
 
-rootRouter.use("/", rootController);
+rootRouter.use("/", pageNotFoundController);
+
+rootRouter.use("/", internalServerErrorController);

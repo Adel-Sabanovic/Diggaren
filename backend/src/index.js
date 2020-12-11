@@ -2,15 +2,18 @@ import express from "express";
 
 import { rootRouter } from "./routes";
 
-import { json } from "body-parser"
+import { json } from "body-parser";
+
+import { config } from "dotenv";
+
+config();
+
 
 
 const app = express();
-
-const port = 8000;
 
 app.use(json());
 
 app.use(rootRouter);
 
-app.listen(port, () => console.log("server started"));
+app.listen(process.env.PORT, () => console.log(`server started at http://localhost:${process.env.PORT}/`));

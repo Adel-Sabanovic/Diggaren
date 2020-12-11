@@ -1,0 +1,27 @@
+import { resultMessage } from "../utilis";
+
+import { INTERNAL_SERVER_ERROR } from "http-status";
+
+
+/**
+ * A middleware that catches all errors that are not explicitly managed and responsenses with internal server error http status code
+ */
+export const internalServerErrorController = (error, req, res, next) => {
+
+    return (
+        res
+        .status(INTERNAL_SERVER_ERROR)
+        .json(
+            resultMessage(
+                false, 
+                INTERNAL_SERVER_ERROR, 
+                "An unexpected error occurred",
+                {
+                    name: error.name,
+                    error: error.message,
+                    stack: error.stack
+                }
+            )
+        )
+    );
+};

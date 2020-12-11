@@ -1,4 +1,3 @@
-export const rootController = (req, res, next) => {
-    
-    res.send("Hello, server !");
-}
+export * from "./page-not-found";
+
+export * from "./internal-server-error";
