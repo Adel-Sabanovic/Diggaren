@@ -8,20 +8,23 @@ import { INTERNAL_SERVER_ERROR } from "http-status";
  */
 export const internalServerErrorController = (error, req, res, next) => {
 
+    const response = (
+        resultMessage(
+            false, 
+            INTERNAL_SERVER_ERROR, 
+            "An unexpected error occurred",
+            {
+                name: error.name,
+                error: error.message,
+            }
+        )
+    );
+
+    console.log(response);
+
     return (
         res
         .status(INTERNAL_SERVER_ERROR)
-        .json(
-            resultMessage(
-                false, 
-                INTERNAL_SERVER_ERROR, 
-                "An unexpected error occurred",
-                {
-                    name: error.name,
-                    error: error.message,
-                    stack: error.stack
-                }
-            )
-        )
+        .json(response )
     );
 };
