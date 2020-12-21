@@ -1,4 +1,4 @@
-import { SETTINGS } from "./settngs";
+import { SETTINGS } from "./settings";
 
 import express from "express";
 

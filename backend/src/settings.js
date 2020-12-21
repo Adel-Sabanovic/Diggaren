@@ -4,4 +4,3 @@ export const SETTINGS = {
     SPOTIFY_AUTH: "https://accounts.spotify.com/authorize",
     SVERIGE_RADIO_API: "http://api.sr.se/api",
 };
-
