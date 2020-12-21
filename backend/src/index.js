@@ -1,12 +1,10 @@
-import express from "express";
+import { SETTINGS } from "./settngs";
 
-import { rootRouter } from "./routes";
+import express from "express";
 
 import { json } from "body-parser";
 
-import { config } from "dotenv";
-
-config();
+import { rootRouter } from "./routes";
 
 
 
@@ -16,4 +14,4 @@ app.use(json());
 
 app.use(rootRouter);
 
-app.listen(process.env.PORT, () => console.log(`server started at http://localhost:${process.env.PORT}/`));
+app.listen(SETTINGS.PORT, () => console.log(`server started at http://localhost:${SETTINGS.PORT}/`));
