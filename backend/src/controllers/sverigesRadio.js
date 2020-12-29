@@ -2,6 +2,14 @@ import { json } from "body-parser";
 import fetch from "node-fetch";
 import {SETTINGS} from "../settings.js";
 
+function p1(){
+    return SETTINGS.SVERIGE_RADIO_API + "/v2/playlists/rightnow?format=json&channelid=132"
+}
+
+function p2(){
+    return SETTINGS.SVERIGE_RADIO_API + "/v2/playlists/rightnow?format=json&channelid=163"
+}
+
 function din_gata(){
     
     return SETTINGS.SVERIGE_RADIO_API + "/v2/playlists/rightnow?format=json&channelid=2576"
