@@ -1,3 +1,5 @@
+import { Request, Response, NextFunction } from "express";
+
 import { resultMessage } from "../utilis";
 
 import { INTERNAL_SERVER_ERROR } from "http-status";
@@ -5,6 +7,11 @@ import { INTERNAL_SERVER_ERROR } from "http-status";
 
 /**
  * A middleware that catches all errors that are not explicitly managed and responds with internal server error http status code
+ * 
+ * @param { Error } error 
+ * @param { Request } req 
+ * @param { Response } res 
+ * @param { NextFunction } next 
  */
 export const internalServerErrorController = (error, req, res, next) => {
 
