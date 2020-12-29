@@ -1,5 +1,8 @@
 import fetch from "node-fetch";
+
 import {SETTINGS} from "../settings.js";
+
+
 
 function channelPages(pageNbr){
     
@@ -8,12 +11,12 @@ function channelPages(pageNbr){
 } 
 
 export async function fetchPages(pageNbr){
+    
     let page = channelPages(pageNbr)
-    console.log(page)
+    
     let response = await fetch(page);
-    let jsonData = await response.body.json();
-    console.log(jsonData)
 
+    // let jsonData = await response.body.json();
 }
 
 

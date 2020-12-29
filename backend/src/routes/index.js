@@ -7,13 +7,16 @@ import { Router } from "express";
 
 import { 
     pageNotFoundController,
-    internalServerErrorController
+    internalServerErrorController,
+    currentPlayingSongController
 }
 from "../controllers/index";
 
 
 
 export const rootRouter = Router();
+
+rootRouter.use("/current-playing-song", currentPlayingSongController);
 
 rootRouter.use("/", pageNotFoundController);
 
