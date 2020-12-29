@@ -4,7 +4,7 @@ import { INTERNAL_SERVER_ERROR } from "http-status";
 
 
 /**
- * A middleware that catches all errors that are not explicitly managed and responsenses with internal server error http status code
+ * A middleware that catches all errors that are not explicitly managed and responds with internal server error http status code
  */
 export const internalServerErrorController = (error, req, res, next) => {
 

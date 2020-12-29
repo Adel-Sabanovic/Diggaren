@@ -14,8 +14,8 @@ from "../utilis"
 
 
 /**
- * A middleware guard that retrieves token and stores it req.app.locals.  
- * If the spotify token cannot be retrievied than an error will be thrown
+ * A middleware guard that retrieves a token and stores it in req.app.locals.  
+ * If the spotify token cannot be retrieved then an error will be thrown
  * 
  * @param { Request } req 
  * 
@@ -51,7 +51,7 @@ export const hasTokenGuard = async (req, _, next) => {
 };
 
 /**
- * Checkes if the stored spotify token has expired
+ * Checks if the stored spotify token has expired
  * 
  * @param { Request } req 
  * 
@@ -65,7 +65,7 @@ function hasTokenExpired(req) {
 };
 
 /**
- * The functions fetches a token in order to create a token metadata that is stored locally
+ * The function fetches a token in order to create a token metadata that is stored locally
  * 
  * @param { Request } req 
  * 
@@ -96,7 +96,7 @@ async function createTokenMetadata() {
 }
 
 /**
- * Creates expire date that is actually an unix timestamp + expire_in prop from token
+ * Creates expiration date for the token that is a unix timestamp + expire_in prop from token
  * 
  * @param { Token } token 
  * 

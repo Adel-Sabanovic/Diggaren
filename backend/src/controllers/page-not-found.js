@@ -5,7 +5,7 @@ import { NOT_FOUND } from "http-status";
 
 
 /**
- * A controller that catches all routes that are not defiend and responsenses with not found http status code
+ * A controller that catches all routes that are not defined and responds with not found http status code
  */
 export const pageNotFoundController = (req, res) => {
 
