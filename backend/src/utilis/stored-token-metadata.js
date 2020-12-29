@@ -12,7 +12,6 @@ import { Request } from "express";
  */
 
 /**
- * 
  * @typedef {{
  *  token: Token;
  *  expireDate: number;
@@ -42,22 +41,5 @@ export function getStoredTokenMetadata(req) {
  */
 export function setStoredTokenMetadata(req, tokenMetadata) {
 
-    defaultStoredTokenMetadata(req);
-
     req.app.locals.tokenMetadata = tokenMetadata;
-};
-
-/**
- * Givs a default value to the stored token metadata if not defiend
- * 
- * @param { Request } req 
- * 
- * @returns { void }
- */
-function defaultStoredTokenMetadata(req) {
-
-    if (!req.app.locals.tokenMetadata) {
-
-        req.app.locals.tokenMetadata = {};
-    }
 };
