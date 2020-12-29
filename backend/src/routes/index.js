@@ -12,11 +12,13 @@ import {
 }
 from "../controllers/index";
 
+import { currentPlayingSongQueryGuard } from "../guards"
+
 
 
 export const rootRouter = Router();
 
-rootRouter.use("/current-playing-song", currentPlayingSongController);
+rootRouter.get("/current-playing-song", currentPlayingSongQueryGuard, currentPlayingSongController);
 
 rootRouter.use("/", pageNotFoundController);
 

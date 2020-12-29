@@ -4,3 +4,5 @@
 
 
 export * from "./has-token-guard";
+
+export * from "./current-playing-song-query-guard";

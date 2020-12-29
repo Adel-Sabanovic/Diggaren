@@ -18,15 +18,6 @@ app.use(json());
 
 app.use(hasTokenGuard);
 
-app.use((req, res, next) => {
-
-    const token = getStoredTokenMetadata(req);
-
-    console.log(token);
-
-    res.send("Trying to update spotify token");
-});
-
 app.use(rootRouter);
 
 app.listen(SETTINGS.PORT, () => console.log(`server started at http://localhost:${SETTINGS.PORT}/`));
