@@ -81,7 +81,7 @@ async function fetchTokenMetadataAndStoreIt(req) {
 /**
  * Creates token metadata
  * 
- * @returns { TokenMetadata } Token metadata
+ * @returns { Promise<TokenMetadata> } Token metadata
  */
 async function createTokenMetadata() {
     
@@ -122,7 +122,7 @@ const CLIENT_ID_AND_SECRET_IN_BASE_64 = Buffer.from(CLIENT_ID_AND_SECRET).toStri
 /**
  * Fetches the spotify token
  * 
- * @returns { Token } Token
+ * @returns { Promise<Token> } Token
  */
 async function fetchToken() {
 
