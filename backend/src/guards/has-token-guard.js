@@ -1,11 +1,28 @@
+import { Request, Response, NextFunction } from "express";
+
 import fetch from "node-fetch";
 
 import { SETTINGS } from "../settings";
 
-import { getStoredTokenMetadata } from "../utilis"
+import { 
+    getStoredTokenMetadata, 
+    setStoredTokenMetadata, 
+    TokenMetadata,
+    Token
+}
+from "../utilis"
 
 
-
+/**
+ * A middleware guard that retrieves token and stores it req.app.locals.  
+ * If the spotify token cannot be retrievied than an error will be thrown
+ * 
+ * @param { Request } req 
+ * 
+ * @param { Response } _ 
+ * 
+ * @param { NextFunction } next 
+ */
 export const hasTokenGuard = async (req, _, next) => {
 
     const token = getStoredTokenMetadata(req);
@@ -17,65 +34,83 @@ export const hasTokenGuard = async (req, _, next) => {
         const hasExpired = hasTokenExpired(req);
 
         if (hasExpired) {
-            
-            await fetchAndStoreTokenAndExpireDate(req);
+
+            await fetchTokenMetadataAndStoreIt(req);
         }
     }
     else if (!hasStoredToken) {
-        
-        await fetchAndStoreTokenAndExpireDate(req);
+
+        await fetchTokenMetadataAndStoreIt(req);
+    }
+    else {
+
+        throw new Error("Unable to connect with spotify api");
     }
 
     next();
 };
 
+/**
+ * Checkes if the stored spotify token has expired
+ * 
+ * @param { Request } req 
+ * 
+ * @returns { boolean }
+ */
 function hasTokenExpired(req) {
 
     const { expireDate } = getStoredTokenMetadata(req);
 
-    return expireDate <= (Date.now() / 1000);
+    return expireDate < Date.now();
 };
 
-async function fetchAndStoreTokenAndExpireDate(req) {
+/**
+ * The functions fetches a token in order to create a token metadata that is stored locally
+ * 
+ * @param { Request } req 
+ * 
+ * @returns { Promise<void> }
+ */
+async function fetchTokenMetadataAndStoreIt(req) {
 
+    const tokenMetadata = await createTokenMetadata(req);
+
+    setStoredTokenMetadata(req, tokenMetadata);
+}
+
+/**
+ * Creates token metadata
+ * 
+ * @returns { TokenMetadata } Token metadata
+ */
+async function createTokenMetadata() {
+    
     const token = await fetchToken();
-
-    storeTokenAndExpireDate(req, token);
-};
-
-function storeTokenAndExpireDate(req, token) {
-
-    let storedToken = addDefaultStoredTokenIfDoesNotExist(req)
-
-    storedToken.token = token;
 
     const expireDate = createExpireDate(token);
 
-    storedToken.expireDate = expireDate;
-};
-
-function addDefaultStoredTokenIfDoesNotExist(req) {
-    
-    let storedToken = getStoredTokenMetadata(req);
-
-    if (!storedToken) {
-
-        req.app.locals.tokenMetadata = {};
-
-        storedToken = getStoredTokenMetadata(req);
+    return {
+        token,
+        expireDate
     }
+}
 
-    return storedToken;
-};
-
+/**
+ * Creates expire date that is actually an unix timestamp + expire_in prop from token
+ * 
+ * @param { Token } token 
+ * 
+ * @returns { number } unix timestamp
+ */
 function createExpireDate(token) {
-    
+
     const { expires_in } = token;
-
-    const expireDate = (Date.now() / 1000) + expires_in;
-
+    
+    const expireDate = Date.now() + expires_in * 1000;
+    
     return expireDate;
 };
+
 
 
 const SPOTIFY_TOKEN_URL = `${SETTINGS.SPOTIFY_AUTH}api/token`;
@@ -84,6 +119,11 @@ const CLIENT_ID_AND_SECRET = `${SETTINGS.SPOTIFY_CLIENT_ID}:${SETTINGS.SPOTIFY_C
 
 const CLIENT_ID_AND_SECRET_IN_BASE_64 = Buffer.from(CLIENT_ID_AND_SECRET).toString("base64");
 
+/**
+ * Fetches the spotify token
+ * 
+ * @returns { Token } Token
+ */
 async function fetchToken() {
 
     const response = await fetch(SPOTIFY_TOKEN_URL, {

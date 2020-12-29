@@ -7,4 +7,4 @@ export * from "./create-validation-guard";
 
 export * from "./result-message";
 
-export * from "./get-stored-token-metadata";
+export * from "./stored-token-metadata";

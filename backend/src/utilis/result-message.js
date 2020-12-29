@@ -21,5 +21,4 @@ export const resultMessage = (success, statusNumber, message, data) => {
         data,
         ...httpMessage(statusNumber),
     };
-
 }

@@ -22,10 +22,10 @@ app.use((req, res, next) => {
 
     const token = getStoredTokenMetadata(req);
 
-    console.log("token: ", token);
+    console.log(token);
 
-    next();
-})
+    res.send("Trying to update spotify token");
+});
 
 app.use(rootRouter);
 
