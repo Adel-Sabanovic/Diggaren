@@ -24,20 +24,21 @@ import { OK, GATEWAY_TIMEOUT } from "http-status";
 export const currentPlayingSongController = async (req, res) => {
     
     try {
-        const { channel } = req.query;
+
+        const { channelName } = req.params;
 
         const { token } = getStoredTokenMetadata(req);
 
-        const song = await fetchCurrentPlayingSong(channel);
+        const song = await fetchCurrentPlayingSong(channelName);
 
-        const songUrl = await fetchSpotifySong(token, song);
+        const songWithUrl = await fetchSpotifySong(token, song);
 
         const response = (
             resultMessage(
                 true, 
                 OK, 
                 "Succeded fetching song from spotify", 
-                { songUrl }
+                songWithUrl
             )
         );
 

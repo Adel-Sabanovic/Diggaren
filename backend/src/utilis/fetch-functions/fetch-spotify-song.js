@@ -9,13 +9,19 @@ import { SETTINGS } from "../../settings";
 
 
 /**
+ * @typedef { Song & {
+ *  url: string;
+ * }} SongWithUrl
+ */
+
+/**
  * Fetches and retrieves a songs url from spotify if found
  * 
  * @param { Token } token 
  * 
- * @param { Song } songFromSR 
+ * @param { Song } song 
  * 
- * @returns { Promise<string | undefined> } song url
+ * @returns { Promise<SongWithUrl | null> } song url
  */
 export async function fetchSpotifySong(token, song) {
 
@@ -37,11 +43,17 @@ export async function fetchSpotifySong(token, song) {
 
     const data = await response.json();
 
-    const [ songFromSpotify ] = data.tracks.items;
+    const [ songFromSpotify = null ] = data.tracks.items;
 
     if (!songFromSpotify) return songFromSpotify;
 
-    const songUrl = songFromSpotify.external_urls.spotify;
+    const url = songFromSpotify.external_urls.spotify;
 
-    return songUrl;
+    const songWithUrl = {
+        url,
+        title,
+        artist
+    }
+
+    return songWithUrl;
 }
