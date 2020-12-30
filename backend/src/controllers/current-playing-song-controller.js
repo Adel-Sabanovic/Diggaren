@@ -85,10 +85,11 @@ function getCurrentPlayedSongUrlFromChannel(channelId) {
 
 
 //Searches spotify for a song based on title name and artist. Returns a link to the song
-export function searchSpotify(token, title, artist){
+export async function searchSpotify(token, title, artist){
     let header = new Headers();
     header.append("Authorization", "Bearer " + token);
-  
+
+
     let requestOptions = {
       method: 'GET',
       headers: header,
@@ -96,15 +97,17 @@ export function searchSpotify(token, title, artist){
     };
   
     let searchQ = "https://api.spotify.com/v1/search?limit=1&type=track&q=track:" + title + "+artist:" + artist;
-    fetch( searchQ , requestOptions)
+    let link = await fetch( searchQ , requestOptions)
     .then(response => response.json())
     .then(function(data){
-      let link = data.tracks.items[0].external_urls.spotify;
-      console.log("länk från searhc metod" + link);
-      return link;
-    })
-    
-    .catch(error => console.log('error', error));
-   }
+    return data.tracks.items[0].external_urls.spotify;
    
-  
+    })
+    .catch(error => console.log('error', error));
+
+    return link;
+   }
+
+
+   
+   

@@ -29,8 +29,8 @@ app.use((req, res, next) => {
 
     fetchCurrentPlayingSong("din_gata").then(song => {
         console.log(song);
-        let link = searchSpotify(access_token, song.title , song.artist);
-        console.log(link);
+        searchSpotify(access_token, song.title , song.artist).then(console.log);
+        
     });
 
     res.send("Trying to update spotify token");
