@@ -33,11 +33,11 @@ export const currentPlayingSongController = async (req, res) => {
 
         const songWithUrl = await fetchSpotifySong(token, song);
 
-        let response;
+        
 
         if (songWithUrl) {
 
-            response = (
+            const response = (
                 resultMessage(
                     true, 
                     OK, 
@@ -45,23 +45,29 @@ export const currentPlayingSongController = async (req, res) => {
                     songWithUrl
                 )
             );
+
+            return (
+                res
+                .status(OK)
+                .json(response)
+            );
         }
         else {
 
-            response = (
+            const response = (
                 resultMessage(
                     true,
                     NOT_FOUND,
                     "Song not found in spotify"
                 )
             );
-        }
 
-        return (
-            res
-            .status(OK)
-            .json(response)
-        );
+            return (
+                res
+                .status(NOT_FOUND)
+                .json(response)
+            )
+        }
     }
     catch(error) {
         
@@ -69,7 +75,7 @@ export const currentPlayingSongController = async (req, res) => {
             resultMessage(
                 false, 
                 GATEWAY_TIMEOUT,
-                "Spotify server is busy wait a sec"
+                "Spotify server is busy cannot fetch song"
             )
         );
 
