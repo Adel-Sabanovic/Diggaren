@@ -11,6 +11,7 @@ import { SETTINGS } from "../../settings";
 /**
  * @typedef { Song & {
  *  url: string;
+ *  image: string;
  * }} SongWithUrl
  */
 
@@ -47,12 +48,17 @@ export async function fetchSpotifySong(token, song) {
 
     if (!songFromSpotify) return songFromSpotify;
 
+    const [ imageObject = null ] = songFromSpotify.album.images;
+
+    const { url: image } = imageObject;
+
     const url = songFromSpotify.external_urls.spotify;
 
     const songWithUrl = {
         url,
         title,
-        artist
+        artist,
+        image
     }
 
     return songWithUrl;
