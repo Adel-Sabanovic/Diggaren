@@ -20,21 +20,19 @@ const validationGuard = (req, res, next) => {
         return next();
     }
 
-    resultMessage(false, BAD_REQUEST, "Validation failed", errors.mapped());
+    const response = (
+        resultMessage(
+            false, 
+            BAD_REQUEST, 
+            "Validation failed", 
+            errors.mapped()
+        )
+    );
 
     return (
         res
         .status(BAD_REQUEST)
-        .json(
-            resultMessage(
-                false, 
-                BAD_REQUEST, 
-                "Validation failed", 
-                {
-                    errors: errors.mapped()
-                }
-            )
-        )
+        .json(response)
     );
 };
 

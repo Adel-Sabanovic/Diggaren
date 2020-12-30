@@ -8,8 +8,6 @@ import { rootRouter } from "./routes";
 
 import { hasTokenGuard } from "./guards";
 
-import { getStoredTokenMetadata } from "./utilis";
-
 
 
 const app = express();
