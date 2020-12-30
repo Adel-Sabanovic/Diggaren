@@ -1,5 +1,5 @@
 /**
- * All the code and files used here utility functions
+ * All the code for utility functions
  */
 
 
