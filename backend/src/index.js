@@ -10,6 +10,11 @@ import { hasTokenGuard } from "./guards";
 
 import { getStoredTokenMetadata } from "./utilis";
 
+import {fetchCurrentPlayingSong, searchSpotify} from "./controllers/current-playing-song-controller"; 
+
+// import {searchSpotify} from "./controllers/current-playing-song-controller"; 
+
+
 
 
 const app = express();
@@ -20,9 +25,13 @@ app.use(hasTokenGuard);
 
 app.use((req, res, next) => {
 
-    const token = getStoredTokenMetadata(req);
+    const access_token = getStoredTokenMetadata(req).token.access_token;
 
-    console.log(token);
+    fetchCurrentPlayingSong("din_gata").then(song => {
+        console.log(song);
+        let link = searchSpotify(access_token, song.title , song.artist);
+        console.log(link);
+    });
 
     res.send("Trying to update spotify token");
 });
