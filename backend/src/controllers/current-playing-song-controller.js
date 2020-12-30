@@ -8,7 +8,7 @@ import {
 } 
 from "../utilis";
 
-import { OK, GATEWAY_TIMEOUT } from "http-status";
+import { OK, GATEWAY_TIMEOUT, NOT_FOUND } from "http-status";
 
 
 
@@ -33,14 +33,29 @@ export const currentPlayingSongController = async (req, res) => {
 
         const songWithUrl = await fetchSpotifySong(token, song);
 
-        const response = (
-            resultMessage(
-                true, 
-                OK, 
-                "Succeded fetching song from spotify", 
-                songWithUrl
-            )
-        );
+        let response;
+
+        if (songWithUrl) {
+
+            response = (
+                resultMessage(
+                    true, 
+                    OK, 
+                    "Succeded fetching song from spotify",
+                    songWithUrl
+                )
+            );
+        }
+        else {
+
+            response = (
+                resultMessage(
+                    true,
+                    NOT_FOUND,
+                    "Song not found in spotify"
+                )
+            );
+        }
 
         return (
             res
