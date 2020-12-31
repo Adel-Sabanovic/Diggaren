@@ -48,7 +48,7 @@ export async function fetchSpotifySong(token, song) {
 
     if (!songFromSpotify) return songFromSpotify;
 
-    const [ imageObject = null ] = songFromSpotify.album.images;
+    const [ imageObject = null ] = (songFromSpotify.album ?? { images: [] }).images;
 
     const { url: image } = imageObject;
 
