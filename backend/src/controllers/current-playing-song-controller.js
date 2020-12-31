@@ -1,11 +1,19 @@
 import { Request, Response, NextFunction } from "express";
 
-import fetch from "node-fetch";
+import { 
+    fetchSpotifySong,
+    fetchCurrentPlayingSong, 
+    getStoredTokenMetadata,
+    resultMessage,
+} 
+from "../utilis";
 
-import { SETTINGS } from "../settings.js";
+import { OK, GATEWAY_TIMEOUT, NOT_FOUND } from "http-status";
+
 
 
 /**
+ * Retrieves an url from spotify of the current playing song in one of sveriges radio channels "p1", "p2" and "din_gata"
  * 
  * @param { Request } req
  * 
@@ -13,63 +21,68 @@ import { SETTINGS } from "../settings.js";
  * 
  * @param { NextFunction } next 
  */
-export const currentPlayingSongController = async (req, res, next) => {
+export const currentPlayingSongController = async (req, res) => {
     
-    
-};
+    try {
 
-const currentPlayedSongsUrls = {
-    p1: getCurrentPlayedSongUrlFromChannel(132),
-    p2: getCurrentPlayedSongUrlFromChannel(163),
-    din_gata: getCurrentPlayedSongUrlFromChannel(2576)
-};
+        const { channelName } = req.params;
 
-/**
- * @typedef {{
- *  title: string;
- *  artist: string;
- * }} - Song 
- */
+        const { token } = getStoredTokenMetadata(req);
 
-/**
- * Fetches a the current played song from a one of these channels p1, p2, din gata
- * 
- * @param { "p1" | "p2" | "din_gata" } channel 
- * 
- * @returns {Promise<Song>}
- */
-async function fetchCurrentPlayingSong(channel) {
+        const song = await fetchCurrentPlayingSong(channelName);
 
-    const currentPlayedSongsUrl = currentPlayedSongsUrls[channel];
+        const songWithUrl = await fetchSpotifySong(token, song);
 
-    const res = await fetch(currentPlayedSongsUrl);
+        
 
-    const data = await res.json();
+        if (songWithUrl) {
 
-    const { 
-        prevSong,
-        song = prevSong,
-    } = data.playlist;
+            const response = (
+                resultMessage(
+                    true, 
+                    OK, 
+                    "Succeded fetching song from spotify",
+                    songWithUrl
+                )
+            );
 
-    const { 
-        title,
-        artist
-    } = song;
+            return (
+                res
+                .status(OK)
+                .json(response)
+            );
+        }
+        else {
 
-    return {
-        title,
-        artist
-    };
-};
+            const response = (
+                resultMessage(
+                    true,
+                    NOT_FOUND,
+                    "Song not found in spotify"
+                )
+            );
 
-/**
- * Return an url that corresponds to the current played songs in sveriges radio channel 
- * 
- * @param { number } channelId - The id of the channel
- * 
- * @returns { string }
- */
-function getCurrentPlayedSongUrlFromChannel(channelId) {
+            return (
+                res
+                .status(NOT_FOUND)
+                .json(response)
+            )
+        }
+    }
+    catch(error) {
+        
+        const response = (
+            resultMessage(
+                false, 
+                GATEWAY_TIMEOUT,
+                "Spotify server is busy cannot fetch song"
+            )
+        );
 
-    return `${SETTINGS.SVERIGE_RADIO_API}/v2/playlists/rightnow?format=json&channelid=${channelId}`;
+        return (
+            res
+            .status(GATEWAY_TIMEOUT)
+            .json(response)
+        );
+    }
 };
