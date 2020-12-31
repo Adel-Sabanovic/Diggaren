@@ -106,7 +106,7 @@ function createExpireDate(token) {
 
     const { expires_in } = token;
     
-    const expireDate = Date.now() + expires_in * 1000;
+    const expireDate = Date.now() + expires_in * 1000 - 60 * 1000;
     
     return expireDate;
 };
