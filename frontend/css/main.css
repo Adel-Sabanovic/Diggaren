@@ -3,24 +3,59 @@ html, body{
     height: 100%;
     margin: 0%;
     padding: 0%;
-    background-color:lightblue ;
+    background-color: #222222;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    font-family: Helvetica, sans-serif;
 }
-p{
+p, h1{
     margin: 0%;
     
 }
 
+
 header{
     width: 100%;
-    height: 10%;
-    background-color: lightcoral;
-}
-article{
-    width: 100%;
-    height: 88%;
-    background-color: lightgreen;
+    height: 20%;
+    color: #ffffff;
+    box-sizing: border-box;
     
 }
+
+header img{
+    
+    width: 15%;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+article{
+    width: 100%;
+    height: 78%;
+    box-sizing: border-box;
+    color: #ffffff;
+    padding-top: 10%;
+    padding-left: 15%;
+    
+}
+article h1{
+    font-size: 300%;
+    -webkit-text-stroke: 2px black;
+    font-weight: bolder;
+
+    
+}
+article p{
+    font-size: 200%;
+    -webkit-text-stroke: 1.5px black;
+    width: 40%;
+    font-weight: bold;
+
+    
+}
+
+
 footer{
     width: 100%;
     height: 2%;
@@ -31,51 +66,32 @@ footer{
 
 
 
-#home{
-    height: 100%;
-    width:40%;
-    float: left;
-    color: blueviolet;
-    background-color: brown;
-    display: block;
-    position: relative;    
-}
-#home a{
-    margin: 0%;
-    position: absolute;
-    top: 40%;
-    left: 10%;
-}
-
-
 ul{
-    
-    width:30%;
-    height: 100%;
-    margin: 0%;
+    width: 40%;
+    margin-top: 7%;
+    margin-right: 4%;
     list-style: none;
-    float: right;  
-    position: relative;
-
+    display: inline;
+    float: right;
+    
+    
 
 }
 li{
-    
     display: inline;
-    margin-right: 20%;
 }
-
+    
 li a{
     width: 15%;
-    height: 50%;
-    position: absolute;
-    top: 50%;
-    background-color: yellow;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+    font-size: 150%;
+    margin-right: 15%;
+    color: #ffffff;
+    -webkit-text-stroke: 1.5px black;
+    font-weight: bolder;
+
 
 }
+    
 a{
     text-decoration: none;
     color: black;   
