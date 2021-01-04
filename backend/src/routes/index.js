@@ -6,19 +6,18 @@ import { Router } from "express";
 
 import { 
     pageNotFoundController,
-    internalServerErrorController,
-    currentPlayingSongController
+    internalServerErrorController
 }
 from "../controllers/index";
 
-import { currentPlayingSongParamsGuard } from "../guards"
+import { apiRouter } from "./api";
 
 
 
 export const rootRouter = Router();
 
-rootRouter.get("/channel/:channelName", currentPlayingSongParamsGuard, currentPlayingSongController);
+rootRouter.use("/api", apiRouter);
 
-rootRouter.use("/", pageNotFoundController);
+rootRouter.use(pageNotFoundController);
 
-rootRouter.use("/", internalServerErrorController);
+rootRouter.use(internalServerErrorController);

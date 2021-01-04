@@ -8,3 +8,5 @@ export * from "./page-not-found";
 export * from "./internal-server-error";
 
 export * from "./current-playing-song-controller";
+
+export * from "./swagger-ui-documentation";
