@@ -33,8 +33,6 @@ export const currentPlayingSongController = async (req, res) => {
 
         const songWithUrl = await fetchSpotifySong(token, song);
 
-        
-
         if (songWithUrl) {
 
             const response = (
