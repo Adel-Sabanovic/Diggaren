@@ -6,15 +6,11 @@ import { json } from "body-parser";
 
 import { rootRouter } from "./routes";
 
-import { hasTokenGuard } from "./guards";
-
 
 
 const app = express();
 
 app.use(json());
-
-app.use(hasTokenGuard);
 
 app.use(rootRouter);
 
