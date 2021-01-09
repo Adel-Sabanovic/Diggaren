@@ -6,9 +6,14 @@ import { json } from "body-parser";
 
 import { rootRouter } from "./routes";
 
+import cors from "cors";
 
 
 const app = express();
+
+const corsMiddleware = cors({ origin: "*" });
+
+app.use(corsMiddleware);
 
 app.use(json());
 

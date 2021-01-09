@@ -23,64 +23,56 @@ import { OK, GATEWAY_TIMEOUT, NOT_FOUND } from "http-status";
  */
 export const currentPlayingSongController = async (req, res) => {
     
+    const { channelName } = req.params;
+
+    const { token } = getStoredTokenMetadata(req);
+
+    const song = await fetchCurrentPlayingSong(channelName);
+
+    let response;
+
+    let statusCode;
+
     try {
-
-        const { channelName } = req.params;
-
-        const { token } = getStoredTokenMetadata(req);
-
-        const song = await fetchCurrentPlayingSong(channelName);
 
         const songWithUrl = await fetchSpotifySong(token, song);
 
         if (songWithUrl) {
 
-            const response = (
-                resultMessage(
-                    true, 
-                    OK, 
-                    "Succeded fetching song from spotify",
-                    songWithUrl
-                )
-            );
+            response = resultMessage(
+                true, 
+                OK, 
+                `Song found`,
+                songWithUrl
+            )
 
-            return (
-                res
-                .status(OK)
-                .json(response)
-            );
+            statusCode = OK;
         }
         else {
 
-            const response = (
-                resultMessage(
-                    true,
-                    NOT_FOUND,
-                    `Could not find song, ${song.artist} - ${song.title}`
-                )
+            response = resultMessage(
+                true,
+                NOT_FOUND,
+                "Song not found in spotify",
+                song
             );
 
-            return (
-                res
-                .status(NOT_FOUND)
-                .json(response)
-            )
+            statusCode = NOT_FOUND;
         }
     }
     catch(error) {
                 
-        const response = (
-            resultMessage(
-                false, 
-                GATEWAY_TIMEOUT,
-                "Spotify server is busy cannot fetch song"
-            )
+        response = resultMessage(
+            false, 
+            GATEWAY_TIMEOUT,
+            `Spotify server is busy and song cannot be fetched at the moment`,
+            song
         );
 
-        return (
-            res
-            .status(GATEWAY_TIMEOUT)
-            .json(response)
-        );
+        statusCode = GATEWAY_TIMEOUT;
     }
+
+    res
+    .status(statusCode)
+    .json(response);
 };
