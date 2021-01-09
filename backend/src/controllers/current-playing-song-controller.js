@@ -51,7 +51,7 @@ export const currentPlayingSongController = async (req, res) => {
         else {
 
             response = resultMessage(
-                true,
+                false,
                 NOT_FOUND,
                 "Song not found in spotify",
                 song
