@@ -35,18 +35,22 @@ article{
     height: 78%;
     box-sizing: border-box;
     color: #ffffff;
-    padding-top: 10%;
-    padding-left: 15%;
+    
     
 }
-article h1{
+.startsida{
+
+    padding-top: 10%;
+    padding-left: 15%;
+}
+.startsida h1{
     font-size: 300%;
     -webkit-text-stroke: 2px black;
     font-weight: bolder;
 
     
 }
-article p{
+.startsida p{
     font-size: 200%;
     -webkit-text-stroke: 1.5px black;
     width: 40%;
@@ -98,36 +102,14 @@ a{
 }
 
 
-#previous{
-    width: 50%;
-    height: 30%;
-    margin-left: 25%;
-    background-color: chartreuse;
-    position: relative;
-}
 
-#current{
-    width: 60%;
+.song{
+    width: 50%;
     height: 40%;
-    margin-left: 20%;
     background-color:cyan;
-    position: relative;
-}
-
-#next{
-    width: 50%;
-    height:30%;
-    margin-left: 25%;  
-    background-color: chartreuse;
-    position: relative;
-        
-}
-
-#previous p, #current p, #next p{
-    margin: 0;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%) 
+    top: 30%;
+    left: 25%;
 }
+
+
