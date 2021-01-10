@@ -4,10 +4,27 @@ html, body{
     margin: 0%;
     padding: 0%;
     background-color: #222222;
+    font-family: Helvetica, sans-serif;
+    
+
+    
+}
+#bakgrundbild{
+    background-image:url("../api.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    font-family: Helvetica, sans-serif;
+    position: relative;
+}
+#bakgrundbild::after{
+    content:"";
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    left: 0%;
+    right: 0%;
+    opacity: 0.7;
+    background-color: #000000;
 }
 p, h1{
     margin: 0%;
@@ -40,8 +57,9 @@ article{
 }
 .startsida{
 
-    padding-top: 10%;
-    padding-left: 15%;
+    padding-top: 15%;
+    padding-left: 6%;
+    
 }
 .startsida h1{
     font-size: 300%;
@@ -58,9 +76,6 @@ article{
 
     
 }
-
-
-
 
 
 ul{
@@ -111,7 +126,7 @@ a{
 .song{
     width: 60%;
     height: 40%;
-    background-color:cyan;
+    background-color: #333333;
     position: absolute;
     display: flex;
     left: 20%;
@@ -120,15 +135,37 @@ a{
 
 .albumCover{
     height: 100%;
-    width: 50%;
+    width: 40%;
 
-    background-color: blueviolet;
 }
+.backupp{
+    height: 70%;
+    margin-top: 15%;
+    margin-left: 15%;
+}   
 
 .songInfo{
     height: 100%;
-    width: 50%;
+    width: 40%;
     float: right;
-    background-color: cadetblue;
+
     
+}
+
+.songInfo h1{
+    margin-top: 15%;
+    margin-bottom: 2%;
+    font-size: 150%;
+}
+
+.spotify{
+    width: 20%;
+    height: 100%;
+
+}
+
+.spotify a img{ 
+    width: 70%;
+    margin-top: 50% ;
+    display: block;
 }
