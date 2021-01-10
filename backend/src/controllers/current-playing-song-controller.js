@@ -39,7 +39,7 @@ export const currentPlayingSongController = async (req, res) => {
                 resultMessage(
                     true, 
                     OK, 
-                    "Succeeded fetching song from spotify",
+                    "Succeded fetching song from spotify",
                     songWithUrl
                 )
             );
@@ -56,7 +56,7 @@ export const currentPlayingSongController = async (req, res) => {
                 resultMessage(
                     true,
                     NOT_FOUND,
-                    `Could not find song, ${song.artist} - ${song.title}, on spotify`
+                    `Could not find song, ${song.artist} - ${song.title}`
                 )
             );
 
@@ -73,7 +73,7 @@ export const currentPlayingSongController = async (req, res) => {
             resultMessage(
                 false, 
                 GATEWAY_TIMEOUT,
-                "Spotify servers are busy, cannot access Spotify"
+                "Spotify server is busy cannot fetch song"
             )
         );
 
