@@ -125,9 +125,9 @@ a{
 
 .albumCover{
     height: 100%;
-    width: 40%;
-
+    width: 50%;
 }
+
 .backupp{
     height: 70%;
     margin-top: 15%;
@@ -173,6 +173,7 @@ a{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 32px;
 }
 
 
