@@ -65,7 +65,7 @@ export const currentPlayingSongController = async (req, res) => {
         response = resultMessage(
             false, 
             GATEWAY_TIMEOUT,
-            `Spotify server is busy and song cannot be fetched at the moment`,
+            `Spotify server are busy and song cannot be fetched at the moment`,
             song
         );
 
