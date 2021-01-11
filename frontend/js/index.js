@@ -35,7 +35,10 @@ async function fetchChannel(channel) {
             url,
             image
         },
-        message
+        message,
+        httpStatusCode: {
+            status
+        }
     } = body
 
     console.log(message);
@@ -63,12 +66,23 @@ async function fetchChannel(channel) {
     }
     else {
 
-        btn.removeAttr("href");
+        if (status === "Gateway Time-out") {
+            btn.removeAttr("href");
 
-        btn.css("filter", "brightness(0.8)");
+            btn.css("filter", "brightness(0.8)");
+    
+            btn.css("cursor", "not-allowed");
+    
+            btn.text(`Server is busy right now`).append(imageElementInStr);
+        }
+        else {
+            btn.removeAttr("href");
 
-        btn.css("cursor", "not-allowed");
-
-        btn.text(`Song Not Found`).append(imageElementInStr)
-    }
+            btn.css("filter", "brightness(0.8)");
+    
+            btn.css("cursor", "not-allowed");
+    
+            btn.text(`Song Not Found`).append(imageElementInStr)
+        }
+        }
 })();
