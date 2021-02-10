@@ -5,3 +5,5 @@
 export * from "./fetch-current-playing-song";
 
 export * from "./fetch-spotify-song";
+
+export * from "./fetch-all-channels";

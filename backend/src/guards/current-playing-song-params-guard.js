@@ -1,6 +1,7 @@
 import { createValidationGuard } from "../utilis";
 
 import { param } from "express-validator";
+import { fetchAllChannels } from "../utilis";
 
 
 
@@ -10,10 +11,17 @@ import { param } from "express-validator";
  */
 export const currentPlayingSongParamsGuard = createValidationGuard([
     param("channelName")
-    .isIn([ 
-        "p1",
-        "p2",
-        "din_gata"
-    ])
+    .custom(async (_, { 
+        req: {
+            params
+        }
+    }) => {
+
+        const { channelName } = params;
+
+        const allChannels = await fetchAllChannels();
+
+        return !!allChannels[channelName]
+    })
     .withMessage("channelName can only be p1, p2 and din_gata")
 ]);

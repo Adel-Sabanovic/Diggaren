@@ -33,43 +33,53 @@ export const currentPlayingSongController = async (req, res) => {
 
     let statusCode;
 
-    try {
+    if (song === null) {
 
-        const songWithUrl = await fetchSpotifySong(token, song);
-
-        if (songWithUrl) {
-
-            response = resultMessage(
-                true, 
-                OK, 
-                `Song found`,
-                songWithUrl
-            )
-
-            statusCode = OK;
-        }
-        else {
-
-            response = resultMessage(
-                false,
-                NOT_FOUND,
-                "Song not found in spotify",
-                song
-            );
-
-            statusCode = NOT_FOUND;
-        }
-    }
-    catch(error) {
-                
         response = resultMessage(
-            false, 
-            GATEWAY_TIMEOUT,
-            `Spotify server are busy and song cannot be fetched at the moment`,
+            false,
+            NOT_FOUND,
+            "Channel not found spotify",
             song
         );
-
-        statusCode = GATEWAY_TIMEOUT;
+    }
+    else {
+        try {
+            const songWithUrl = await fetchSpotifySong(token, song);
+    
+            if (songWithUrl) {
+    
+                response = resultMessage(
+                    true, 
+                    OK, 
+                    `Song found`,
+                    songWithUrl
+                )
+    
+                statusCode = OK;
+            }
+            else {
+    
+                response = resultMessage(
+                    false,
+                    NOT_FOUND,
+                    "Song not found in spotify",
+                    song
+                );
+    
+                statusCode = NOT_FOUND;
+            }
+        }
+        catch(error) {
+                    
+            response = resultMessage(
+                false, 
+                GATEWAY_TIMEOUT,
+                `Spotify server are busy and song cannot be fetched at the moment`,
+                song
+            );
+    
+            statusCode = GATEWAY_TIMEOUT;
+        }
     }
 
     res

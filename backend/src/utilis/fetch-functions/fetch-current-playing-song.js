@@ -1,5 +1,7 @@
 import fetch from "node-fetch";
 
+import { fetchAllChannels } from "./fetch-all-channels";
+
 import { SETTINGS } from "../../settings.js";
 
 
@@ -16,12 +18,6 @@ function getCurrentPlayedSongUrlFromChannel(channelId) {
     return `${SETTINGS.SVERIGE_RADIO_API}/v2/playlists/rightnow?format=json&channelid=${channelId}`;
 };
 
-const currentPlayedSongsUrls = {
-    p1: getCurrentPlayedSongUrlFromChannel(132),
-    p2: getCurrentPlayedSongUrlFromChannel(163),
-    din_gata: getCurrentPlayedSongUrlFromChannel(2576)
-};
-
 /**
  * @typedef {{
  *  title: string;
@@ -32,13 +28,22 @@ const currentPlayedSongsUrls = {
 /**
  * Fetches a the current played song from a one of these channels p1, p2, din gata
  * 
- * @param { "p1" | "p2" | "din_gata" } channel 
+ * @param { string } channelName
  * 
- * @returns {Promise<Song>}
+ * @returns {Promise<Song|null>}
  */
-export async function fetchCurrentPlayingSong(channel) {
+export async function fetchCurrentPlayingSong(channelName) {
 
-    const currentPlayedSongsUrl = currentPlayedSongsUrls[channel];
+    const allChannels = await fetchAllChannels();
+
+    const channelId = allChannels[channelName];
+
+    if (!channelName) {
+        
+        return null;
+    }
+
+    const currentPlayedSongsUrl = getCurrentPlayedSongUrlFromChannel(channelId);
 
     const res = await fetch(currentPlayedSongsUrl);
 
