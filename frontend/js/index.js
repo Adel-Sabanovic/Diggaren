@@ -10,22 +10,33 @@ const API_URL = "http://localhost:8000/api";
  * 
  * @param {Channel} channel
  */
-async function fetchChannel(channel) {
+async function fetchCurrentPlayingSong(channel) {
 
     const fetchUrl = `${API_URL}/channel/${channel}`;
 
     const response = await fetch(fetchUrl);
 
-    const data = await response.json();
+    const json = await response.json();
 
-    return data;
+    return json;
+}
+
+async function fetchAllChannells() {
+
+    const fetchUrl = `${API_URL}/all-channels`;
+
+    const response = await fetch(fetchUrl);
+
+    const json = await response.json();
+
+    return json;
 }
 
 
 (async () => {
     const channel = $("#page").text().trim();
     
-    const body = await fetchChannel(channel);
+    const body = await fetchCurrentPlayingSong(channel);
 
     const { 
         success,
@@ -84,5 +95,5 @@ async function fetchChannel(channel) {
     
             btn.text(`Song Not Found`).append(imageElementInStr)
         }
-        }
+    }
 })();
