@@ -7,18 +7,6 @@ import { SETTINGS } from "../../settings.js";
 
 
 /**
- * Returns an url that corresponds to the current played songs in sveriges radio channel 
- * 
- * @param { number } channelId - The id of the channel
- * 
- * @returns { string }
- */
-function getCurrentPlayedSongUrlFromChannel(channelId) {
-
-    return `${SETTINGS.SVERIGE_RADIO_API}/v2/playlists/rightnow?format=json&channelid=${channelId}`;
-};
-
-/**
  * @typedef {{
  *  title: string;
  *  artist: string;
@@ -36,16 +24,14 @@ export async function fetchCurrentPlayingSong(channelName) {
 
     const allChannels = await fetchAllChannels();
 
-    const channelId = allChannels[channelName];
+    const channelId = allChannels[channelName]; 
 
-    if (!channelName) {
+    if (!channelId) {
         
         return null;
     }
 
-    const currentPlayedSongsUrl = getCurrentPlayedSongUrlFromChannel(channelId);
-
-    const res = await fetch(currentPlayedSongsUrl);
+    const res = await fetch(`${SETTINGS.SVERIGE_RADIO_API}/v2/playlists/rightnow?format=json&channelid=${channelId}`);
 
     const data = await res.json();
 

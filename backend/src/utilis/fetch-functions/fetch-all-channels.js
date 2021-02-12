@@ -1,5 +1,7 @@
 import fetch from "node-fetch";
 
+import { SETTINGS } from "../../settings";
+
 
 /**
  * @typedef {{
@@ -19,7 +21,7 @@ export async function fetchAllChannels() {
 
     while(true) {
         
-        const response = await fetch(`https://api.sr.se/api/v2/channels/?format=json&page=${currentPage}`);
+        const response = await fetch(`${SETTINGS.SVERIGE_RADIO_API}/v2/channels/?format=json&page=${currentPage}`);
 
         const { channels } = await response.json();
 
