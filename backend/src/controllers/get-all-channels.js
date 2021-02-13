@@ -1,15 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 
 import { 
-    fetchSpotifySong,
-    fetchCurrentPlayingSong, 
-    getStoredTokenMetadata,
     resultMessage,
     fetchAllChannels,
 } 
 from "../utilis";
 
-import { OK, GATEWAY_TIMEOUT, NOT_FOUND } from "http-status";
+import { OK } from "http-status";
 
 
 
@@ -26,7 +23,14 @@ export const getAllChannels = async (_, res) => {
     
     const allChannels = Object.keys(await fetchAllChannels());
 
+    response = resultMessage(
+        true,
+        OK,
+        "Fetching all channels succeeded",
+        allChannels
+    );
+
     res
-    .status(200)
-    .json(allChannels)
+    .status(ok)
+    .json(response)
 };
