@@ -23,7 +23,7 @@ export const getAllChannels = async (_, res) => {
     
     const allChannels = Object.keys(await fetchAllChannels());
 
-    let response = resultMessage(
+    const response = resultMessage(
         true,
         OK,
         "Fetching all channels succeeded",
@@ -31,6 +31,6 @@ export const getAllChannels = async (_, res) => {
     );
 
     res
-    .status(ok)
+    .status(OK)
     .json(response)
 };
