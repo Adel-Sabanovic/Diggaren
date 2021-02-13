@@ -38,7 +38,7 @@ export const currentPlayingSongController = async (req, res) => {
         response = resultMessage(
             false,
             NOT_FOUND,
-            "Channel not found spotify",
+            "Channel not found",
             song
         );
 
