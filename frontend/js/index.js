@@ -27,7 +27,7 @@ async function setSelectorContent() {
 }
 
 async function onSelectorChange(event) {
-
+    console.log(event);
     const channelName = event.target.value;
     
     await setContent(channelName);
@@ -46,15 +46,23 @@ async function setContent(channelName) {
     const errorTitle = document.getElementById("errortitle");
 
     if (!success) {
-
+        
         errorTitle.innerHTML = message;
 
         errorTitle.style.display = "block";
+
+        setTemplate({
+            title: "",
+            artist: "",
+            imageUrl: "album.png",
+            songUrl:"",
+            channelName
+        });
     }
 
     if (success) {
         
-        errorTitle.style.display = "hide";
+        errorTitle.style.display = "none";
 
         const {
             title,
