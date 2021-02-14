@@ -8,8 +8,6 @@ async function setSelectorContent() {
 
     const { data: channels } = await response.json();
 
-    await setContent(channels[0]);
-
     const selector = document.getElementById("radio");
 
     selector.addEventListener("change", onSelectorChange);
@@ -24,6 +22,8 @@ async function setSelectorContent() {
 
         selector.appendChild(option)
     }
+
+    await setContent(channels[0]);
 }
 
 async function onSelectorChange(event) {
@@ -95,4 +95,3 @@ function setTemplate({
 
     btnElement.setAttribute("href", songUrl);
 }
-
