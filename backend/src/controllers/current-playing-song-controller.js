@@ -5,6 +5,7 @@ import {
     fetchCurrentPlayingSong, 
     getStoredTokenMetadata,
     resultMessage,
+    ENUM
 } 
 from "../utilis";
 
@@ -33,13 +34,25 @@ export const currentPlayingSongController = async (req, res) => {
 
     let statusCode;
 
-    if (!song) {
+    if (ENUM.CHANNEL_NOT_FOUND==song) {
 
         response = resultMessage(
             false,
             NOT_FOUND,
             "Channel not found",
-            song
+            null
+        );
+
+        statusCode = NOT_FOUND;
+    }
+    else if(ENUM.CHANNEL_NOT_PLAYING_MUSIC==song){
+
+        response = resultMessage(
+            false,
+            NOT_FOUND,
+            "Channel is not playing music",
+            null
+            
         );
 
         statusCode = NOT_FOUND;
