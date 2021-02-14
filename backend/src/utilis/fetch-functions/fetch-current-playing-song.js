@@ -4,8 +4,10 @@ import { fetchAllChannels } from "./fetch-all-channels";
 
 import { SETTINGS } from "../../settings.js";
 
-
-
+export const ENUM = {
+    CHANNEL_NOT_FOUND: "Channel not found",
+    CHANNEL_NOT_PLAYING_MUSIC: "Channel is not playing music", 
+}
 /**
  * @typedef {{
  *  title: string;
@@ -28,7 +30,7 @@ export async function fetchCurrentPlayingSong(channelName) {
 
     if (!channelId) {
         
-        return null;
+        return ENUM.CHANNEL_NOT_FOUND;
     }
 
     const res = await fetch(`${SETTINGS.SVERIGE_RADIO_API}/v2/playlists/rightnow?format=json&channelid=${channelId}`);
@@ -39,9 +41,11 @@ export async function fetchCurrentPlayingSong(channelName) {
         previoussong,
         song = previoussong
     } = data.playlist;
+
     if(!song){
-        return null;
+        return ENUM.CHANNEL_NOT_PLAYING_MUSIC;
     }
+
     const { 
         title,
         artist
