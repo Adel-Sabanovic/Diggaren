@@ -213,6 +213,6 @@ a{
     position: relative;
 }
 
-  #btn:disabled {
-    filter: brightness("80");
+.disabled {
+    filter: brightness(40%);
 }

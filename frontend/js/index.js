@@ -79,12 +79,15 @@ async function setSuccessContent(channelName, {
 
     const btn = document.getElementById("btn");
 
-    btn.setAttribute("disabled", true);
+    btn.setAttribute("target", "_blank");
+
+    btn.setAttribute("href", url);
+
+    btn.classList.remove("disabled");
 
     setTemplate({
         title,
         artist,
-        songUrl: url,
         imageUrl: image,
         channelName
     });
@@ -103,7 +106,11 @@ async function setErrorContent(channelName, message, {
 
     const btn = document.getElementById("btn");
 
-    btn.setAttribute("disabled", true);
+    btn.removeAttribute("target");
+
+    btn.removeAttribute("href");
+
+    btn.classList.add("disabled");
 
     setTemplate({
         title, 
@@ -131,7 +138,6 @@ function setTemplate(data = defaultTemplateArgument) {
     const {
         title,
         artist,
-        songUrl,
         imageUrl,
         channelName
     } = data;
@@ -144,17 +150,15 @@ function setTemplate(data = defaultTemplateArgument) {
 
     const imageElement = document.getElementById("image");
 
-    const btnElement = document.getElementById("btn");
+    
 
-    artistElement.innerHTML = artist;
+    artistElement.innerHTML = artist || "";
 
-    titleElement.innerHTML = title;
+    titleElement.innerHTML = title || "";
 
-    channelNameElement.innerHTML = nameStr(channelName);
+    channelNameElement.innerHTML = nameStr(channelName || "");
 
-    imageElement.setAttribute("src", imageUrl);
-
-    btnElement.setAttribute("href", songUrl);
+    imageElement.setAttribute("src", imageUrl || "");
 }
 
 
@@ -162,3 +166,4 @@ function nameStr(str) {
 
     return str.replace(/_/g, " ");
 }
+
