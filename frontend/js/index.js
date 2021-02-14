@@ -35,8 +35,6 @@ async function onSelectorChange(event) {
 
 async function setContent(channelName) {
     
-    const channelName = event.target.value;
-
     const response = await fetch(`${API_URL}/channel/${channelName}`);
     
     const { 
@@ -52,7 +50,7 @@ async function setContent(channelName) {
     } = await response.json();;
 
     if (!success) {
-
+        console.log(httpStatusCode);
     }
 
     if (success) {
