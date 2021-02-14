@@ -56,7 +56,6 @@ async function onSelectorChange(event) {
             channelName
         });
     }
-
 }
 
 
@@ -68,23 +67,23 @@ function setContent({
     channelName
 }) {
 
-    const artist = document.getElementById("artist");
+    const artistElement = document.getElementById("artist");
 
-    const title = document.getElementById("title");
+    const titleElement = document.getElementById("title");
 
-    const channelName = document.getElementById("channelname");
+    const channelNameElement = document.getElementById("channelname");
 
-    const image = document.getElementById("image");
+    const imageElement = document.getElementById("image");
 
-    const btn = document.getElementById("btn");
+    const btnElement = document.getElementById("btn");
 
-    artist.innerHTML = artist;
+    artistElement.innerHTML = artist;
 
-    title.innerHTML = title;
+    titleElement.innerHTML = title;
 
-    channelName.innerHTML = channelName;
+    channelNameElement.innerHTML = channelName;
 
-    image.setAttribute("src", imageUrl);
+    imageElement.setAttribute("src", imageUrl);
 
-    btn.setAttribute("href", songUrl)
+    btnElement.setAttribute("href", songUrl)
 }
