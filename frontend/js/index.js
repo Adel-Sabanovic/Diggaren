@@ -2,13 +2,13 @@ const API_URL = "http://localhost:8000/api";
 
 setSelectorContent();
 
-let channel;
-
 async function setSelectorContent() {
 
     const response = await fetch(`${API_URL}/all-channels`);
 
     const { data: channels } = await response.json();
+
+    await setContent(channels[0]);
 
     const selector = document.getElementById("radio");
 
@@ -29,9 +29,16 @@ async function setSelectorContent() {
 async function onSelectorChange(event) {
 
     const channelName = event.target.value;
+    
+    await setContent(channelName);
+}
+
+async function setContent(channelName) {
+    
+    const channelName = event.target.value;
 
     const response = await fetch(`${API_URL}/channel/${channelName}`);
-    const json = await response.json();
+    
     const { 
         success,
         message,
@@ -42,9 +49,7 @@ async function onSelectorChange(event) {
             url,
             image
         },
-    } = json;
-
-    console.log(json, image);
+    } = await response.json();;
 
     if (!success) {
 
@@ -52,7 +57,7 @@ async function onSelectorChange(event) {
 
     if (success) {
         
-        setContent({
+        setTemplate({
             title,
             artist,
             songUrl: url,
@@ -62,8 +67,7 @@ async function onSelectorChange(event) {
     }
 }
 
-
-function setContent({ 
+function setTemplate({ 
     title,
     artist,
     songUrl,
@@ -89,5 +93,6 @@ function setContent({
 
     imageElement.setAttribute("src", imageUrl);
 
-    btnElement.setAttribute("href", songUrl)
+    btnElement.setAttribute("href", songUrl);
 }
+
