@@ -31,7 +31,7 @@ async function onSelectorChange(event) {
     const channelName = event.target.value;
 
     const response = await fetch(`${API_URL}/channel/${channelName}`);
-
+    const json = await response.json();
     const { 
         success,
         message,
@@ -42,7 +42,9 @@ async function onSelectorChange(event) {
             url,
             image
         },
-    } = await response.json();
+    } = json;
+
+    console.log(json, image);
 
     if (!success) {
 
@@ -54,7 +56,7 @@ async function onSelectorChange(event) {
             title,
             artist,
             songUrl: url,
-            iamgeUrl: image,
+            imageUrl: image,
             channelName
         });
     }
