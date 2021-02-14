@@ -18,6 +18,8 @@ async function setSelectorContent() {
 
         const option = document.createElement("option");
 
+        option.innerHTML = channel;
+
         option.setAttribute("value", channel);
 
         selector.appendChild(option)
