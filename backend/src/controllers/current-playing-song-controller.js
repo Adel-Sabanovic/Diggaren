@@ -34,7 +34,7 @@ export const currentPlayingSongController = async (req, res) => {
 
     let statusCode;
 
-    if (ENUM.CHANNEL_NOT_FOUND==song) {
+    if (ENUM.CHANNEL_NOT_FOUND==song.result) {
 
         response = resultMessage(
             false,
@@ -45,14 +45,13 @@ export const currentPlayingSongController = async (req, res) => {
 
         statusCode = NOT_FOUND;
     }
-    else if(ENUM.CHANNEL_NOT_PLAYING_MUSIC==song){
+    else if(ENUM.CHANNEL_NOT_PLAYING_MUSIC==song.result){
 
         response = resultMessage(
             false,
             NOT_FOUND,
             "Channel is not playing music",
-            null
-            
+            song.data
         );
 
         statusCode = NOT_FOUND;

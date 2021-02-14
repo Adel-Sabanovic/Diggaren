@@ -30,7 +30,9 @@ export async function fetchCurrentPlayingSong(channelName) {
 
     if (!channelId) {
         
-        return ENUM.CHANNEL_NOT_FOUND;
+        return {
+            result: ENUM.CHANNEL_NOT_FOUND
+        };
     }
 
     const res = await fetch(`${SETTINGS.SVERIGE_RADIO_API}/v2/playlists/rightnow?format=json&channelid=${channelId}`);
@@ -43,7 +45,11 @@ export async function fetchCurrentPlayingSong(channelName) {
     } = data.playlist;
 
     if(!song){
-        return ENUM.CHANNEL_NOT_PLAYING_MUSIC;
+
+        return {
+            result: ENUM.CHANNEL_NOT_PLAYING_MUSIC,
+            data: song
+        };
     }
 
     const { 
