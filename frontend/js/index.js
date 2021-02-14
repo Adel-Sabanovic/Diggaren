@@ -93,6 +93,8 @@ function setTemplate({
     channelName
 }) {
 
+    channelName = channelName.replace(/_/g, " ");
+
     const artistElement = document.getElementById("artist");
 
     const titleElement = document.getElementById("title");
