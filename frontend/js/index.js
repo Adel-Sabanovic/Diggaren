@@ -40,21 +40,29 @@ async function setContent(channelName) {
     const { 
         success,
         message,
-        httpStatusCode,
-        data: {
-            title,
-            artist,
-            url,
-            image
-        },
+        data,
     } = await response.json();;
 
+    const errorTitle = document.getElementById("errortitle");
+
     if (!success) {
-        console.log(httpStatusCode);
+
+        errorTitle.innerHTML = message;
+
+        errorTitle.style.display = "block";
     }
 
     if (success) {
         
+        errorTitle.style.display = "hide";
+
+        const {
+            title,
+            artist,
+            url,
+            image
+        } = data;
+
         setTemplate({
             title,
             artist,
