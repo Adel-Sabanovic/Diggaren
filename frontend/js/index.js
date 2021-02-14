@@ -23,15 +23,66 @@ async function setSelectorContent() {
 }
 
 async function onSelectorChange(event) {
-    
-    const response = await fetch(`${API_URL}/channel/${channel}`);
+
+    const channelName = event.target.value;
+
+    const response = await fetch(`${API_URL}/channel/${channelName}`);
 
     const { 
         success,
         message,
-        data: song,
-        httpStatusCode
+        httpStatusCode,
+        data: {
+            title,
+            artist,
+            url,
+            image
+        },
     } = await response.json();
 
-    const song = await fetchSong(event.target.value)
+    if (!success) {
+
+    }
+
+    if (success) {
+        
+        setContent({
+            title,
+            artist,
+            songUrl: url,
+            iamgeUrl: image,
+            channelName
+        });
+    }
+
+}
+
+
+function setContent({ 
+    title,
+    artist,
+    songUrl,
+    imageUrl,
+    channelName
+}) {
+
+    const artist = document.getElementById("artist");
+
+    const title = document.getElementById("title");
+
+    const channelName = document.getElementById("channelname");
+
+    const image = document.getElementById("image");
+
+    const btn = document.getElementById("btn");
+
+    artist.innerHTML = artist;
+
+    title.innerHTML = title;
+
+    channelName.innerHTML = channelName;
+
+    image.setAttribute("src", imageUrl);
+
+    btn.setAttribute("href", songUrl)
 }
