@@ -5,25 +5,24 @@
         <link rel="stylesheet" href="css/main.css">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="refresh" content="40">
     </head>
     <body>
-        <div 
-        id="page" 
-        style="display: none;">
-        p2
-        </div>
+        
 
         <header>
             <a href="index.html"><img src="diggaren_logga.png"></a></div>
-            <ul id="links">
-                <li> <a href="channel-p1.html">P1</a></li>
-                <li> <a href="channel-p2.html">P2</a></li>
-                <li> <a href="channel-din-gata.html">Din Gata</a></li>
-            </ul>
+        
+            <label for="radio" class="meny">Välj en radiokanal:</label>
+            <select name="radio" id="radio" class="meny">
+                <option value="P1">P1</option>
+                <option value="P2">P2</option>
+                <option value="P3">P3</option>
+                <option value="P4">P4</option>
+            </select>
         </header>
+        
         <article>
-            <section class="rubrik"><p>P2</p></section>
+            <section class="rubrik"><p>P1</p></section>
             <section class="song">   
                 <div class="albumCover">
                     <img class="backupp" src="imagenotfound.gif" alt="Image not found" onerror="this.onerror=null;this.src='album.png';" />
@@ -34,7 +33,7 @@
                     <h1>Artist:</h1>
                     <p id="artist"></p>
                     <a id="btn" class="btn">
-                        Add To Spotify
+                        Link To Spotify
                         <div
                         class="logo-btn-container">
                             <img 
