@@ -57,7 +57,7 @@ async function setContent(channelName) {
 
     if (!success) {
         
-        await setErrorContent(channelName, message);
+        await setErrorContent(channelName, message, data);
     }
 
     if (success) {
@@ -90,7 +90,10 @@ async function setSuccessContent(channelName, {
     });
 }
 
-async function setErrorContent(channelName, message) {
+async function setErrorContent(channelName, message, { 
+    title, 
+    artist
+}) {
     
     const errorTitle = document.getElementById("errortitle");
 
@@ -103,21 +106,35 @@ async function setErrorContent(channelName, message) {
     btn.setAttribute("disabled", true);
 
     setTemplate({
-        title: "",
-        artist: "",
+        title, 
+        artist,
         imageUrl: "album.png",
-        songUrl:"",
-        channelName
+        channelName,
     });
 }
 
-function setTemplate({ 
-    title,
-    artist,
-    songUrl,
-    imageUrl,
-    channelName
-}) {
+const defaultTemplateArgument = {
+    title: "",
+    artist: "",
+    songUrl: "",
+    imageUrl: "",
+    channelName: ""
+}
+
+function setTemplate(data = defaultTemplateArgument) {
+
+    data = {
+        ...data,
+        ...defaultTemplateArgument
+    }
+
+    const {
+        title,
+        artist,
+        songUrl,
+        imageUrl,
+        channelName
+    } = data;
 
     channelName = channelName.replace(/_/g, " ");
 
