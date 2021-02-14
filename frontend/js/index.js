@@ -28,7 +28,7 @@ async function setSelectorContent() {
 
         const option = document.createElement("option");
 
-        option.innerHTML = channel;
+        option.innerHTML = nameStr(channel);
 
         option.setAttribute("value", channel);
 
@@ -39,7 +39,7 @@ async function setSelectorContent() {
 }
 
 async function onSelectorChange(event) {
-    console.log(event);
+    
     const channelName = event.target.value;
     
     await setContent(channelName);
@@ -93,7 +93,7 @@ async function setSuccessContent(channelName, {
 async function setErrorContent(channelName, message, { 
     title, 
     artist
-}) {
+} = {}) {
     
     const errorTitle = document.getElementById("errortitle");
 
@@ -124,8 +124,8 @@ const defaultTemplateArgument = {
 function setTemplate(data = defaultTemplateArgument) {
 
     data = {
-        ...data,
-        ...defaultTemplateArgument
+        ...defaultTemplateArgument,
+        ...data
     }
 
     const {
@@ -135,8 +135,6 @@ function setTemplate(data = defaultTemplateArgument) {
         imageUrl,
         channelName
     } = data;
-
-    channelName = channelName.replace(/_/g, " ");
 
     const artistElement = document.getElementById("artist");
 
@@ -152,9 +150,15 @@ function setTemplate(data = defaultTemplateArgument) {
 
     titleElement.innerHTML = title;
 
-    channelNameElement.innerHTML = channelName;
+    channelNameElement.innerHTML = nameStr(channelName);
 
     imageElement.setAttribute("src", imageUrl);
 
     btnElement.setAttribute("href", songUrl);
+}
+
+
+function nameStr(str) {
+
+    return str.replace(/_/g, " ");
 }
