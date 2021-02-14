@@ -39,7 +39,9 @@ export async function fetchCurrentPlayingSong(channelName) {
         previoussong,
         song = previoussong
     } = data.playlist;
-
+    if(!song){
+        return null;
+    }
     const { 
         title,
         artist
