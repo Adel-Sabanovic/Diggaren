@@ -55,42 +55,60 @@ async function setContent(channelName) {
         data,
     } = await response.json();;
 
-    const errorTitle = document.getElementById("errortitle");
-
     if (!success) {
         
-        errorTitle.innerHTML = message;
-
-        errorTitle.style.display = "block";
-
-        setTemplate({
-            title: "",
-            artist: "",
-            imageUrl: "album.png",
-            songUrl:"",
-            channelName
-        });
+        await setErrorContent(channelName, message);
     }
 
     if (success) {
         
-        errorTitle.style.display = "none";
-
-        const {
-            title,
-            artist,
-            url,
-            image
-        } = data;
-
-        setTemplate({
-            title,
-            artist,
-            songUrl: url,
-            imageUrl: image,
-            channelName
-        });
+        await setSuccessContent(channelName, data);
     }
+}
+
+async function setSuccessContent(channelName, {
+    title,
+    artist,
+    url,
+    image
+}) {
+
+    const errorTitle = document.getElementById("errortitle");
+
+    errorTitle.style.display = "none";
+
+    const btn = document.getElementById("btn");
+
+    btn.setAttribute("disabled", true);
+
+    setTemplate({
+        title,
+        artist,
+        songUrl: url,
+        imageUrl: image,
+        channelName
+    });
+}
+
+async function setErrorContent(channelName, message) {
+    
+    const errorTitle = document.getElementById("errortitle");
+
+    errorTitle.innerHTML = message;
+
+    errorTitle.style.display = "block";
+
+    const btn = document.getElementById("btn");
+
+    btn.setAttribute("disabled", true);
+
+    setTemplate({
+        title: "",
+        artist: "",
+        imageUrl: "album.png",
+        songUrl:"",
+        channelName
+    });
 }
 
 function setTemplate({ 
