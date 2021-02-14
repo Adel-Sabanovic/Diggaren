@@ -1,6 +1,18 @@
 const API_URL = "http://localhost:8000/api";
 
+
+setInterval(updateContent, 40000);
+
 setSelectorContent();
+
+async function updateContent() {
+
+    const selector = document.getElementById("radio");
+
+    const channel = selector.value;
+
+    await setContent(channel);
+}
 
 async function setSelectorContent() {
 
