@@ -1,99 +1,88 @@
 const API_URL = "http://localhost:8000/api";
 
-/**
- * @typedef {"p1" | "p2" | "din_gata"} Channel
- */
+setSelectorContent();
 
+async function setSelectorContent() {
 
-/**
- * Fetches from the server
- * 
- * @param {Channel} channel
- */
-async function fetchCurrentPlayingSong(channel) {
+    const response = await fetch(`${API_URL}/all-channels`);
 
-    const fetchUrl = `${API_URL}/channel/${channel}`;
+    const { data: channels } = await response.json();
 
-    const response = await fetch(fetchUrl);
+    const selector = document.getElementById("radio");
 
-    const json = await response.json();
+    selector.addEventListener("change", onSelectorChange);
 
-    return json;
+    for (const channel of channels) {
+
+        const option = document.createElement("option");
+
+        option.setAttribute("value", channel);
+
+        selector.appendChild(option)
+    }
 }
 
-async function fetchAllChannells() {
+async function onSelectorChange(event) {
 
-    const fetchUrl = `${API_URL}/all-channels`;
+    const channelName = event.target.value;
 
-    const response = await fetch(fetchUrl);
-
-    const json = await response.json();
-
-    return json;
-}
-
-
-(async () => {
-    const channel = $("#page").text().trim();
-    
-    const body = await fetchCurrentPlayingSong(channel);
+    const response = await fetch(`${API_URL}/channel/${channelName}`);
 
     const { 
         success,
+        message,
+        httpStatusCode,
         data: {
-            artist,
             title,
+            artist,
             url,
             image
         },
-        message,
-        httpStatusCode: {
-            status
-        }
-    } = body
+    } = await response.json();
 
-    console.log(message);
+    if (!success) {
 
-    $("#artist").text(artist);
-    
-    $("#title").text(title);
-
-    const btn = $("#btn");
-
-    const imageElementInStr = `
-        <div class="logo-btn-container">
-            <img class="logo-btn" src="spotify.svg">
-        </div>
-    `
-    .trim();
+    }
 
     if (success) {
-    
-        $("#image").attr("src", image);
-    
-        btn.attr("href", url);
-
-        btn.text(`Add To Spotify`).append(imageElementInStr)
+        
+        setContent({
+            title,
+            artist,
+            songUrl: url,
+            iamgeUrl: image,
+            channelName
+        });
     }
-    else {
 
-        if (status === "Gateway Time-out") {
-            btn.removeAttr("href");
+}
 
-            btn.css("filter", "brightness(0.8)");
-    
-            btn.css("cursor", "not-allowed");
-    
-            btn.text(`Server is busy right now`).append(imageElementInStr);
-        }
-        else {
-            btn.removeAttr("href");
 
-            btn.css("filter", "brightness(0.8)");
-    
-            btn.css("cursor", "not-allowed");
-    
-            btn.text(`Song Not Found`).append(imageElementInStr)
-        }
-    }
-})();
+function setContent({ 
+    title,
+    artist,
+    songUrl,
+    imageUrl,
+    channelName
+}) {
+
+    const artist = document.getElementById("artist");
+
+    const title = document.getElementById("title");
+
+    const channelName = document.getElementById("channelname");
+
+    const image = document.getElementById("image");
+
+    const btn = document.getElementById("btn");
+
+    artist.innerHTML = artist;
+
+    title.innerHTML = title;
+
+    channelName.innerHTML = channelName;
+
+    image.setAttribute("src", imageUrl);
+
+    btn.setAttribute("href", songUrl)
+}
