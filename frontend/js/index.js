@@ -2,6 +2,8 @@ const API_URL = "http://localhost:8000/api";
 
 setSelectorContent();
 
+let channel;
+
 async function setSelectorContent() {
 
     const response = await fetch(`${API_URL}/all-channels`);
